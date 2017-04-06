@@ -1,0 +1,51 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+		<script src="jquery.countdown.min.js"></script>
+
+		<script>
+		$(function(){
+			var h2Element = $('h2');
+			var button = $('#button');
+
+			button.click(function(){
+				var detailInput = $('#detail');
+				var detailInputVal = detailInput.val();
+				console.log(detailInputVal);
+				var fact = {
+					"fact" : {
+						"details" : detailInputVal
+					}
+				};
+
+				$.post( "http://www.catfact.info/api/v1/facts.json", fact, function( data ) {
+				console.log(data);
+				});
+			});
+	
+			h2Element.click(function(){
+				$.get( "http://www.catfact.info/api/v1/facts.json?page=:page&per_page=:per_page", function( data ) {
+				var detail = data.facts[0].details;
+				h2Element.html(detail);
+				});
+			});
+		});
+
+		</script>
+		<h1 class "headline">Hello!</h1>
+		<h2>bye :( </h2>
+		<hr />
+		<input id="detail"/>
+		<button id="button">Click me</button>
+		<hr />
+		<div id="getting-started"></div>
+		<script type="text/javascript">
+		  $('#getting-started').countdown('2017/06/01', function(event) {
+		    $(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
+		  });
+		</script>
+	</body>
+</html>
